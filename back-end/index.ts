@@ -14,6 +14,16 @@ app.use(cors());
 app.use(express.json());
 const port = 4000;
 
+/**
+ * LOGIN PAGE:
+ * Should see if user data exists in the database.
+ * Returns 200 if successfully found
+ * Returns 400 if wrong credentials
+ * Returns 500 if something went horrifically wrong
+ * 
+ * NOTE: CHANGE POST TO GET WHEN DONE TESTING
+ * LOGIN ROUTE SHOULD (PROBABLY) NOT BE POSTING ANYTHING
+ */
 app.route("/login").post(async (req, res) => {
   const data = req.body;
 
@@ -31,9 +41,17 @@ app.route("/login").post(async (req, res) => {
   res.status(500).send("How did we get here");
 });
 
+/**
+ * SIGNUP PAGE:
+ * Adds the user into the database if they don't exist
+ * Returns 400 if incorrect length
+ * Returns 400 if the user already exists
+ * Returns 200 if the operation was a success
+ */
 app.route("/signup").post(async (req, res) => {
   const data = req.body;
 
+  // Future implementation: 
   // if (data.username.length < someamount && data.username.length > someamount) {
   //    res.status(400).send("Incorrect length! ");
   // }
