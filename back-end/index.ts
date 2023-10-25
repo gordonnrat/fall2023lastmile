@@ -23,31 +23,36 @@ app.route("/login").post(async (req, res) => {
   );
   console.log(userData);
   console.log(metaData);
-
-  res.status(200).send("This confirms that the login works");
+  if (userData.length == 1) {
+    res.status(200).send("Login successful")
+  } else if (userData.length == 0) {
+    res.status(400).send("Incorrect credentials")
+  }
+  res.status(500).send("How did we get here");
 });
 
 app.route("/signup").post(async (req, res) => {
   const data = req.body;
 
-  await sequelize.query(
-    "INSERT INTO Users (username, createdAt, password) VALUES (:username, :createAt, :password)",
-    {
-      replacements: {
-        username: data.username,
-        createAt: new Date(),
-        password: data.password,
-      },
-    }
-  );
-
-  const [select, selectMeta] = await sequelize.query("SELECT * FROM Users");
-  console.log(select);
-  console.log("Input user " + data.username);
-  console.log("Input pass " + data.password);
-
-  res.status(200).send();
-  sequelize.close();
+  // if (data.username.length < someamount && data.username.length > someamount) {
+  //    res.status(400).send("Incorrect length! ");
+  // }
+  try {
+    await sequelize.query(
+      "INSERT INTO Users (username, createdAt, password) VALUES (:username, :createAt, :password)",
+      {
+        replacements: {
+          username: data.username,
+          createAt: new Date(),
+          password: data.password,
+        },
+      }
+    );
+  } catch (e){
+    res.status(400).send("User already exists")
+  }
+  
+  res.status(200).send("Success");
 });
 
 app.listen(port, () => {
