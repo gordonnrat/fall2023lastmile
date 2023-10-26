@@ -1,0 +1,48 @@
+.todolist-page {
+    margin-left: 230px;
+    padding-left: 25px;
+    margin-top: 57px;
+    padding-top: 10px;
+    height: 1000px;
+}
+
+.check-button {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    margin-left: 15px;
+    border: 2px rgba(7, 190, 184, 0.8) solid;
+    background-color: rgb(184, 224, 223, 0.3);
+}
+
+.check-button:hover {
+    cursor: pointer;
+}
+
+.task-page-container {
+    display: flex;
+    margin-top: 55px;
+}
+
+.task-page-left-container {
+    flex: 2;
+}
+
+.task-page-right-container {
+    flex: 1;
+    border: 1px #22223B solid;
+    border-radius: 25px;
+    margin-right: 25px;
+    height: 300px;
+}
+
+.task-container {
+    background-color: white;
+    width: 90%;
+    height: 85px;
+    border: 1px #22223B solid;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}

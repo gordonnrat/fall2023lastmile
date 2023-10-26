@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Todolist from './pages/Todolist';
+import Todolist from './pages/tsx/Todolist';
 import { HashRouter as Router, Routes, Route }
     from 'react-router-dom';
 import Login from './pages/Login';
