@@ -58,3 +58,8 @@ a {
     border: red;
     background-repeat: no-repeat;
 }
+
+#errorMsg{
+    color: red;
+    font: bold;
+}
