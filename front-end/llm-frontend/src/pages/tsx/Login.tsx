@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./Login.css"
+import "../css/Login.css";
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
             <div className="bi">
                 
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='loginform'>
                 <h2>Log In</h2>
                 <p id="errorMsg"></p>
                 <label htmlFor="email">Email</label>
@@ -60,7 +60,7 @@ const LoginForm: React.FC = () => {
                 />
                 
                 <input type="submit" value="Log In" />
-                <a href="/signup">Don't have an account? Sign up</a>
+                <a href="/#/signup">Don't have an account? Sign up</a>
             </form>
             
         </div>
