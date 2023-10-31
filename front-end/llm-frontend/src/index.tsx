@@ -6,8 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import Todolist from './pages/tsx/Todolist';
 import { HashRouter as Router, Routes, Route }
     from 'react-router-dom';
-import Login from './pages/Login';
-import LoginForm from './pages/Login';
+import Login from './pages/tsx/Login';
+import LoginForm from './pages/tsx/Login';
+import SignupForm from './pages/tsx/Signup';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +19,7 @@ root.render(
           <Routes>
             <Route path='/todolist' element={<Todolist/>}/>
             <Route path='/login' element={<LoginForm/>}/>
+            <Route path='/signup' element={<SignupForm/>}/>
           </Routes>
     </Router>
   </React.StrictMode>
