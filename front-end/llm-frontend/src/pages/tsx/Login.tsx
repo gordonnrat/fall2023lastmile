@@ -3,11 +3,34 @@ import "../css/Login.css";
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const DOMAIN_NAME = "http://localhost:4000/";
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle your login logic here
-        console.log("Email:", email, "Password:", password);
+        // Handle your login logic here '
+        console.log(email + " " + password);
+        const formData = {
+            email: email,
+            password: password
+        }
+
+        await fetch (DOMAIN_NAME + "login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData),
+        }).then(async (res) => {
+            const p = document.querySelector('#errorMsg');
+            if (p == null) { return }
+            if (!res.ok) {
+                p.textContent = "Incorrect Login Information!";
+                return;
+            } else {
+                p.textContent = "";
+                // Redirect to the homepage 
+            }
+        });
     };
 
     return (
@@ -17,6 +40,7 @@ const LoginForm: React.FC = () => {
             </div>
             <form onSubmit={handleSubmit} className='loginform'>
                 <h2>Log In</h2>
+                <p id="errorMsg"></p>
                 <label htmlFor="email">Email</label>
                 <input
                     type="text"
