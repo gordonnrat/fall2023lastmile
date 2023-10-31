@@ -7,7 +7,7 @@ const LoginForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle your login logic here
+        // Handle your login logic here '
         console.log(email + " " + password);
         const formData = {
             email: email,
