@@ -8,7 +8,7 @@
 
 
 
-form {
+.signupform{
     background-color: white;
     padding: 2rem;
     border-radius: 5px;
@@ -22,14 +22,14 @@ form {
 }
 
 
-input[type="text"],
-input[type="password"] {
+.signupform input[type="text"],
+.signupform input[type="password"] {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-input[type="submit"] {
+.signupform input[type="submit"] {
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -43,7 +43,7 @@ input[type="submit"] {
     margin-top: 1rem; /* Space it from the input fields */
 }
 
-a {
+.signupform a {
     margin-top: 1rem;
     text-decoration: none;
     color: #4CAF50;

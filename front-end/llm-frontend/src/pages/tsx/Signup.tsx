@@ -18,7 +18,7 @@ const SignupForm: React.FC = () => {
             <div className="bi">
                 
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='signupform'>
                 <h2>Sign Up</h2>
                 <label htmlFor="username">Username</label>
                 <input

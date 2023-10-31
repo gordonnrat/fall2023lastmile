@@ -15,7 +15,7 @@ const LoginForm: React.FC = () => {
             <div className="bi">
                 
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='loginform'>
                 <h2>Log In</h2>
                 <label htmlFor="email">Email</label>
                 <input
