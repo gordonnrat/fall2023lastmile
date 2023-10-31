@@ -26,24 +26,54 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 const port = 4000;
+/**
+ * LOGIN PAGE:
+ * Should see if user data exists in the database.
+ * Returns 200 if successfully found
+ * Returns 400 if wrong credentials
+ * Returns 500 if something went horrifically wrong
+ */
 app.route("/login").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    console.log(data);
-    const [userData, metaData] = yield sequelize.query("SELECT username, password FROM Users WHERE username = :username AND password = :password", { replacements: { username: data.username, password: data.password } });
+    const [userData, metaData] = yield sequelize.query("SELECT email, password FROM Users WHERE email = :email AND password = :password", { replacements: { email: data.email, password: data.password } });
     console.log(userData);
     console.log(metaData);
-    res.status(200).send("This confirms that the login works");
+    if (userData.length == 1) {
+        res.status(200).json({ Message: "Login successful" });
+    }
+    else if (userData.length == 0) {
+        res.status(400).json({ Message: "Incorrect credentials" });
+    }
+    else {
+        res.status(500).json({ Message: "How did we get here" });
+    }
 }));
+/**
+ * SIGNUP PAGE:
+ * Adds the user into the database if they don't exist
+ * Returns 400 if incorrect length
+ * Returns 400 if the user already exists
+ * Returns 200 if the operation was a success
+ */
 app.route("/signup").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    yield sequelize.query("INSERT INTO Users (username, createdAt, password) VALUES (:username, :createAt, :password)", { replacements: { username: data.username, createAt: new Date(), password: data.password }
-    });
-    const [select, selectMeta] = yield sequelize.query("SELECT * FROM Users");
-    console.log(select);
-    console.log("Input user " + data.username);
-    console.log("Input pass " + data.password);
-    res.status(200).send();
-    sequelize.close();
+    // Future implementation: 
+    // if (data.email.length < someamount && data.email.length > someamount) {
+    //    res.status(400).send("Incorrect length! ");
+    // }
+    try {
+        yield sequelize.query("INSERT INTO Users (email, createdAt, password) VALUES (:email, :createAt, :password)", {
+            replacements: {
+                email: data.email,
+                createAt: new Date(),
+                password: data.password,
+            },
+        });
+    }
+    catch (e) {
+        res.status(400).json({ Message: "Error!" });
+    }
+    res.status(200).json({ Message: "Success! " });
 }));
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
