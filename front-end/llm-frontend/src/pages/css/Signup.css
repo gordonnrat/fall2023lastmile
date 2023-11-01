@@ -23,7 +23,8 @@
 
 
 .signupform input[type="text"],
-.signupform input[type="password"] {
+.signupform input[type="password"],
+.signupform input[type="email"] {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -57,4 +58,9 @@
     background-image: url("../../images/signupimg.png");
     border: red;
     background-repeat: no-repeat;
+}
+
+#errorMsg{
+    color: red;
+    font: bold;
 }

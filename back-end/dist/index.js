@@ -55,25 +55,39 @@ app.route("/login").post((req, res) => __awaiter(void 0, void 0, void 0, functio
  * Returns 400 if the user already exists
  * Returns 200 if the operation was a success
  */
-app.route("/signup").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     // Future implementation: 
-    // if (data.email.length < someamount && data.email.length > someamount) {
+    // if (data.password.length < someamount && data.password.length > someamount) {
     //    res.status(400).send("Incorrect length! ");
     // }
     try {
-        yield sequelize.query("INSERT INTO Users (email, createdAt, password) VALUES (:email, :createAt, :password)", {
+        yield sequelize.query("INSERT INTO Users (username, email, createdAt, password) VALUES (:username, :email, :createAt, :password)", {
             replacements: {
+                username: data.username,
                 email: data.email,
                 createAt: new Date(),
                 password: data.password,
             },
         });
+        res.status(200).json({ Message: "Success! " });
     }
     catch (e) {
-        res.status(400).json({ Message: "Error!" });
+        if (e instanceof sequelize_1.Error) {
+            if (e.message == "Validation error") {
+                console.log("already exists");
+                res.status(412).send("Email already exists!");
+            }
+            else {
+                console.log("unknown: " + e);
+                res.status(400).send("Unknown error: " + e);
+            }
+        }
+        else {
+            console.log("We blew up");
+            res.status(500).send("How did we get here");
+        }
     }
-    res.status(200).json({ Message: "Success! " });
 }));
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
