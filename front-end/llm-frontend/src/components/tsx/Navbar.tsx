@@ -6,12 +6,33 @@ export default function Navbar() {
         <div className="navbar">
             <ul className="navbar-links">
                 <li>
-                    <Link to="/">
-                        <div className="navbar-left-logo">
-                            {/* <img src="https://placehold.co/400" alt="logo" /> */}
-                            <h1 className="website-name-gradient">our website name</h1>
-                        </div>
-                    </Link>
+                    <div className="navbar-left-container">
+                        <ul>
+                            <li>
+                                <Link to="/">
+                                    <div className="navbar-left-logo">
+                                        {/* <img src="https://placehold.co/400" alt="logo" /> */}
+                                        <h1 className="website-name-gradient">our website name</h1>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li className="navbar-left-links navbar-left-hover">
+                                <Link to="/shop" className="navbar-left-text">
+                                    Shop
+                                </Link>
+                            </li>
+                            <li className="navbar-left-links navbar-left-hover">
+                                <Link to="/leaderboard" className="navbar-left-text">
+                                    Leaderboard
+                                </Link>
+                            </li>
+                            <li className="navbar-left-links navbar-left-hover">
+                                <Link to="/achievements" className="navbar-left-text">
+                                    Achievements
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li>
                     <Link to="/"> 

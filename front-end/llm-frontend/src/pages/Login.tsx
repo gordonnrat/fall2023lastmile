@@ -36,7 +36,7 @@ const LoginForm: React.FC = () => {
                 />
                 
                 <input type="submit" value="Log In" />
-                <a href="/signup">Don't have an account? Sign up</a>
+                <a id='signup-button' href="/signup">Don't have an account? Sign up</a>
             </form>
             
         </div>

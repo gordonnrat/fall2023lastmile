@@ -21,7 +21,7 @@
 
 .task-page-container {
     display: flex;
-    margin-top: 55px;
+    margin-top: 35px;
 }
 
 .task-page-left-container {
@@ -36,6 +36,32 @@
     height: 300px;
 }
 
+.task-input {
+    border: 1px #22223B solid;
+    border-radius: 15px;
+    height: 45px;
+    width: 90%;
+    margin-bottom: 25px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: white;
+    text-align: left;
+    padding-left: 55px;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.65);
+    position: relative;
+    z-index: 0;
+}
+
+.task-input-icon{
+    position: absolute;
+    top: -3px;
+    left: -2px;
+    height: 47px;
+}
+
 .task-container {
     background-color: white;
     width: 90%;
@@ -45,4 +71,89 @@
     display: flex;
     align-items: center;
     margin-bottom: 25px;
+}
+
+.task-input-form {
+    border: 1px #22223B solid;
+    border-radius: 15px;
+    width: 90%;
+    margin-bottom: 25px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+    background-color: white;
+    text-align: left;
+    padding-left: 55px;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.65);
+    position: relative;
+    z-index: 0;
+    padding-top: 5px;
+}
+
+.task-name-input {
+    height: 32px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 99%;
+    font-size: 20px;
+}
+
+.task-description-input {
+    height: 24px;
+    font-size: 1rem;
+    width: 99%;
+    resize: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.task-date-input {
+    height: 24px;
+}
+
+.task-date-input:focus {
+    outline: none;
+}
+
+.task-submit-button {
+    height: 28px;
+    background-color: #07BEB8;
+    border: none;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    padding: 0 15px 0 15px;
+    color: white;
+    font-weight: 700;
+}
+
+.task-submit-button:hover {
+    background-color: #01b0ab;
+    cursor: pointer;
+}
+
+.task-cancel-button {
+    height: 28px;
+    background-color: #E5B3FE;
+    border: none;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    padding: 0 15px 0 15px;
+    color: white;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.task-cancel-button:hover {
+    background-color: #d39aef;
+    cursor: pointer;
+}
+
+.task-input-bottom {
+    padding-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
