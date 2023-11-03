@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
-import { Error, InstanceError, Sequelize } from "sequelize";
+import { DataTypes, Error, InstanceError, Sequelize } from "sequelize";
+import { genSalt, hash, compare } from "bcrypt";
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const port = 4000;
+const saltRounds = 10;
 
 /**
  * LOGIN PAGE:
@@ -25,22 +27,31 @@ const port = 4000;
 app.route("/login").post(async (req, res) => {
   const data = req.body;
 
+  const User = sequelize.define('user', {
+    password: {
+      field: 'password',
+      type: DataTypes.STRING,
+      primaryKey: false
+    }
+  })
+
   const [userData, metaData] = await sequelize.query(
-    "SELECT email, password FROM Users WHERE email = :email AND password = :password",
-    { replacements: { email: data.email, password: data.password } }
+    "SELECT email, password FROM Users WHERE email = :email",
+    { replacements: { email: data.email }, 
+      model: User,
+      mapToModel: true},
+
   );
   console.log(userData);
   console.log(metaData);
-  if (userData.length == 1) {
+  const result = await compare(data.password, userData.dataValues.password)
+   if (result) {
     console.log("login success");
     res.status(200).json({Message: "Login successful"})
-  } else if (userData.length == 0) {
+  } else {
     console.log("incorrect creds");
     res.status(400).json({Message: "Incorrect credentials"})
-  } else {
-    console.log("we blew up");
-    res.status(500).json({Message: "How did we get here"});
-  }
+  } 
 });
 
 /**
@@ -58,6 +69,8 @@ app.route("/signup").put(async (req, res) => {
   //    res.status(400).send("Incorrect length! ");
   // }
 
+  const securedPassword = await hash(data.password, saltRounds);
+
   try {
     await sequelize.query(
       "INSERT INTO Users (username, email, createdAt, password) VALUES (:username, :email, :createAt, :password)",
@@ -66,7 +79,7 @@ app.route("/signup").put(async (req, res) => {
           username: data.username,
           email: data.email,
           createAt: new Date(),
-          password: data.password,
+          password: securedPassword,
         },
       }
     );
