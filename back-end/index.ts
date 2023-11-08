@@ -146,10 +146,22 @@ app.route("/createTasks").put(async (req, res) => {
   }
 });
 
+/**
+ * Update Tasks:
+ * 
+ * 
+ */
 app.route("/updateTasks").post(async (req, res) => {
 
 });
 
+/**
+ * Delete Tasks:
+ * Deletes the task assigned to a certain id
+ * Returns 200 when successful
+ * Returns 400 when error
+ * 
+ */
 app.route("/deleteTasks").delete(async (req, res) =>{
   const data = req.body;
   try{
