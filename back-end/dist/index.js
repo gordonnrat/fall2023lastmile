@@ -95,8 +95,65 @@ app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, functio
         }
         else {
             console.log("We blew up");
-            res.status(500).send("How did we get here");
+            res.status(500).send("How did we get here: " + e);
         }
+    }
+}));
+/**
+ * Update User Email:
+ * Updates the user email in database to whatever they entered into the field
+ * Returns 200 if success
+ * Returns 412 if email already exists
+ * Returns 400 if unknown error
+ */
+app.route("/updateUserEmail").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        yield sequelize.query("UPDATE Users SET email = :email WHERE id = :id ", {
+            replacements: {
+                email: data.email,
+                id: data.id
+            },
+        });
+        res.status(200).send("Successfully changed");
+    }
+    catch (e) {
+        if (e instanceof sequelize_1.Error) {
+            if (e.message == "Validation error") {
+                console.log("already exists");
+                res.status(412).send("Email already exists!");
+            }
+            else {
+                console.log("unknown: " + e);
+                res.status(400).send("Unknown error: " + e);
+            }
+        }
+        else {
+            console.log("We blew up");
+            res.status(500).send("How did we get here: " + e);
+        }
+    }
+}));
+/**
+ * Update User Password:
+ * Updates the user password in data to whatever they put in the field
+ * Returns 200 if success
+ * Returns 400 if error
+ */
+app.route("/updateUserPassword").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        const securedPassword = yield (0, bcrypt_1.hash)(data.password, saltRounds);
+        yield sequelize.query("UPDATE Users SET password = :password WHERE id = :id", {
+            replacements: {
+                password: securedPassword,
+                id: data.id
+            }
+        });
+        res.status(200).send("Successfully changed");
+    }
+    catch (e) {
+        res.status(400).send(e);
     }
 }));
 /**
@@ -144,14 +201,27 @@ app.route("/createTasks").put((req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(400).send(e);
     }
 }));
-app.route("/updateTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-}));
+/**
+ * Update Tasks:
+ *
+ *
+ */
+app.route("/updateTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
+/**
+ * Delete Tasks:
+ * Deletes the task assigned to a certain id
+ * Returns 200 when successful
+ * Returns 400 when error
+ *
+ */
 app.route("/deleteTasks").delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     try {
-        yield sequelize.query("DELETE FROM Task WHERE taskid = :taskid", { replacements: {
-                taskid: data.taskid
-            } });
+        yield sequelize.query("DELETE FROM Task WHERE taskid = :taskid", {
+            replacements: {
+                taskid: data.taskid,
+            },
+        });
         res.status(200).send("Successfully deleted");
     }
     catch (e) {

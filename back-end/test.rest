@@ -5,7 +5,7 @@ Content-Type: application/json
     "username": "Something",
     "password": "definitely secure"
 }
-###
+### 
 
 POST http://localhost:4000/signup HTTP/1.1
 Content-Type: application/json
@@ -42,3 +42,20 @@ Content-Type: application/json
     "taskid": 140
 }
 ###
+
+POST http://localhost:4000/updateUserPassword
+Content-Type: application/json
+
+{
+    "id": 134,
+    "password": "some test"
+}
+###
+
+POST http://localhost:4000/updateUserEmail
+Content-Type: application/json
+
+{
+    "id": 135,
+    "email": "somerandomtest@gmail.com"
+}

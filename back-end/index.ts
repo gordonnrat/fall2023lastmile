@@ -92,7 +92,7 @@ app.route("/signup").put(async (req, res) => {
       }
     } else {
       console.log("We blew up");
-      res.status(500).send("How did we get here");
+      res.status(500).send("How did we get here: " + e);
     }
   }
 });
@@ -101,22 +101,34 @@ app.route("/signup").put(async (req, res) => {
  * Update User Email:
  * Updates the user email in database to whatever they entered into the field
  * Returns 200 if success
- * Returns 400 if error
+ * Returns 412 if email already exists
+ * Returns 400 if unknown error
  */
 app.route("/updateUserEmail").post(async (req, res) => {
   const data = req.body;
   try {
     await sequelize.query(
-      "UPDATE Users WHERE id = :id SET email = :email", 
+      "UPDATE Users SET email = :email WHERE id = :id ", 
     {
       replacements: {
-        id: data.id,
         email: data.email,
+        id: data.id
       },
     });
     res.status(200).send("Successfully changed");
   } catch (e) {
-    res.status(400).send(e);
+    if (e instanceof Error) {
+      if (e.message == "Validation error") {
+        console.log("already exists");
+        res.status(412).send("Email already exists!");
+      } else {
+        console.log("unknown: " + e);
+        res.status(400).send("Unknown error: " + e);
+      }
+    } else{
+      console.log("We blew up");
+      res.status(500).send("How did we get here: " + e);
+    }
   }
 });
 
@@ -129,12 +141,13 @@ app.route("/updateUserEmail").post(async (req, res) => {
 app.route("/updateUserPassword").post(async (req, res) => {
   const data = req.body;
   try{
+    const securedPassword = await hash(data.password, saltRounds);
     await sequelize.query(
-      "UPDATE Users WHERE id = :id SET password = :password",
+      "UPDATE Users SET password = :password WHERE id = :id",
       {
         replacements: {
-          id: data.id,
-          password: data.password
+          password: securedPassword,
+          id: data.id
         }
       }
     )
