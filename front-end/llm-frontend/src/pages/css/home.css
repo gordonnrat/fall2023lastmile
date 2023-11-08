@@ -5,6 +5,7 @@
   font-family: 'Arial', sans-serif; /* You should use the font that matches your design */
   max-width: 1200px;
   margin: 0 auto;
+  overflow-y: scroll;
 }
 
 /* Header styles */
@@ -23,9 +24,11 @@
 }
 
 .navigation button {
+
+
+ 
   margin-left: 10px;
   padding: 10px 20px;
-  border: none;
   background-color: #007bff; /* Adjust the color to match your design */
   color: white;
   border-radius: 5px;
@@ -56,18 +59,27 @@
 .hero .cta {
   padding: 15px 30px;
   font-size: 18px;
-  background-color: #28a745; /* Adjust the color to match your design */
-  color: white;
-  border: none;
-  border-radius: 5px;
+  color: black;
   cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50px;
+  border: 1px solid #000;
+  background: #07BEB8;
+  
 }
+.signupbtn{
+  
+    text-decoration: none; /* Remove underlines or other decorations */
+    color: #000; /* Set the text color to your preferred color */
 
+}
 /* Features section styles */
 .features {
   display: flex;
   justify-content: space-around;
   padding: 50px 20px;
+  background: url("../../images/wave.png"), white 50% / cover no-repeat
+  
 }
 
 .feature {
@@ -95,22 +107,33 @@
 }
 
 .to-do-icon {
-  background-image: url(''); /* Replace with the actual path to your icon */
+  background-image: url('../../images/todolisticon.svg'); /* Replace with the actual path to your icon */
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
 }
 
 .boards-icon {
-  background-image: url(''); /* Replace with the actual path to your icon */
+  background-image: url('../../images/boardsicon.svg'); /* Replace with the actual path to your icon */
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
 }
 
 .calendar-icon {
-  background-image: url(''); /* Replace with the actual path to your icon */
+  background-image: url('../../images/calender.svg'); /* Replace with the actual path to your icon */
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
 }
 
 /* Gamification section styles */
 .gamification {
-  background-color: #ddd; /* Adjust the color to match your design */
+  background: linear-gradient(180deg, #B6E7E5 40.63%, #FFCBF2 100%);
   padding: 50px 20px;
   text-align: center;
+  
+  
 }
 
 .gamification h2 {
@@ -118,6 +141,7 @@
   margin-bottom: 20px;
   color: #333; /* Adjust the color to match your design */
 }
+
 
 .gamification p {
   font-size: 18px;
