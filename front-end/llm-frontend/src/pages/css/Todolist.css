@@ -9,7 +9,7 @@
 .check-button {
     height: 22px;
     width: 22px;
-    border-radius: 50%;
+    border-radius: 100px;
     margin-left: 15px;
     border: 2px rgba(7, 190, 184, 0.8) solid;
     background-color: rgb(184, 224, 223, 0.3);
@@ -71,6 +71,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 25px;
+    overflow: auto;
 }
 
 .task-input-form {
@@ -156,4 +157,28 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+
+.task-information {
+    margin-left: 22px;
+    height: 85px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.task-info-name{
+    margin: 0;
+    font-size: 18px;
+}
+
+.task-info-desc{
+    margin: 0;
+    font-size: 16px;
+}
+
+.task-info-date {
+    margin: 0;
+    color: #01b0ab;
+    font-size: 16px;
 }
