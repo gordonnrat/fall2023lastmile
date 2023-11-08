@@ -146,6 +146,25 @@ app.route("/createTasks").put(async (req, res) => {
   }
 });
 
+app.route("/updateTasks").post(async (req, res) => {
+
+});
+
+app.route("/deleteTasks").delete(async (req, res) =>{
+  const data = req.body;
+  try{
+    await sequelize.query(
+      "DELETE FROM Task WHERE taskid = :taskid",
+      {replacements: {
+        taskid: data.taskid
+      }}
+    )
+    res.status(200).send("Successfully deleted");
+  } catch (e){
+    res.status(400).send(e);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

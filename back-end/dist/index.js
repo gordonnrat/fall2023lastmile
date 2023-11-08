@@ -99,6 +99,13 @@ app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, functio
         }
     }
 }));
+/**
+ * Get Tasks:
+ * Searches database for the tasks assigned to a user
+ * Returns 200 if successful and sends tasks to frontend
+ * Returns 400 for all other errors
+ *
+ */
 // CHANGE BACK TO GET LATER
 app.route("/getTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
@@ -114,6 +121,12 @@ app.route("/getTasks").post((req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(400).send(e);
     }
 }));
+/**
+ * Create Tasks:
+ * Inserts tasks into the table and assigns to it the user
+ * Returns 200 if successful
+ * Returns 400 for all other errors
+ */
 app.route("/createTasks").put((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     try {
@@ -126,6 +139,20 @@ app.route("/createTasks").put((req, res) => __awaiter(void 0, void 0, void 0, fu
             },
         });
         res.status(200).json({ message: "Success" });
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+}));
+app.route("/updateTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+app.route("/deleteTasks").delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        yield sequelize.query("DELETE FROM Task WHERE taskid = :taskid", { replacements: {
+                taskid: data.taskid
+            } });
+        res.status(200).send("Successfully deleted");
     }
     catch (e) {
         res.status(400).send(e);
