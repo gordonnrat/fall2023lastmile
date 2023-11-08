@@ -1,66 +1,101 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "../css/Signup.css";
 
 const SignupForm: React.FC = () => {
-    const [username, setUsername] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const DOMAIN_NAME = "http://localhost:4000/";
+  const REDIRECT_URL = "http://localhost:3000/#/login/";
+  const p = document.querySelector("#errorMsg");
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle your signup logic here
-        console.log("Username:", username, "Email:", email, "Password:", password);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle your signup logic here
+    if (password !== confirmPassword) {
+        if (p == null) { return }
+        p.textContent = "Passwords do not match!"
+        return;
+    }
+
+    console.log(email + " " + password);
+    const formData = {
+      username: username,
+      email: email,
+      password: password,
     };
 
-    return (
-        <div className="container">
-            <div className="bi">
-                
-            </div>
-            <form onSubmit={handleSubmit} className='signupform'>
-                <h2>Sign Up</h2>
-                <label htmlFor="username">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="choose a username."
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+    await fetch(DOMAIN_NAME + "signup", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then(async (res) => {
+      if (p == null) {
+        return;
+      }
+      if (res.status == 412) {
+        p.textContent = "Email already exists!";
+        return;
+      } else if (!res.ok) {
+        p.textContent = "Unknown error! Please try again";
+        return;
+      } else {
+        p.textContent = "";
+        window.location.href = REDIRECT_URL;
+      }
+    });
+  };
 
-                <label htmlFor="email">Email</label>
-                <input
-                    type="text"
-                    id="email"
-                    placeholder="enter your email."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+  return (
+    <div className="container">
+      <div className="bi"></div>
+      <form onSubmit={handleSubmit} className="signupform">
+        <h2>Sign Up</h2>
+        <p id="errorMsg"></p>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="choose a username."
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="enter your password."
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="enter your email."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-                <label htmlFor="confirm-password">Confirm Password</label>
-                <input
-                    type="password"
-                    id="confirm-password"
-                    placeholder="re-enter your password."
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                
-                <input type="submit" value="Sign Up" />
-                <a href="/#/login">Already have an account? Log in</a>
-            </form>
-        </div>
-    );
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="enter your password."
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <label htmlFor="confirm-password">Confirm Password</label>
+        <input
+          type="password"
+          id="confirm-password"
+          placeholder="re-enter your password."
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        <input type="submit" value="Sign Up" />
+        <a href="/#/login">Already have an account? Log in</a>
+      </form>
+    </div>
+  );
 };
 
 export default SignupForm;

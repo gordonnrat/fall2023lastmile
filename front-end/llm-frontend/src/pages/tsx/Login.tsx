@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import "../css/Login.css";
+import img1 from "../../images/8bitsprite.png";
+
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -35,8 +37,8 @@ const LoginForm: React.FC = () => {
 
     return (
         <div className="container">
-            <div className="bi">
-                
+            <div id = "bi">
+                <img src={img1} alt = "Chibi art"></img>
             </div>
             <form onSubmit={handleSubmit} className='loginform'>
                 <h2>Log In</h2>

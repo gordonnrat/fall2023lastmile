@@ -1,6 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
-import { Sequelize } from "sequelize";
+import { DataTypes, Error, InstanceError, Sequelize } from "sequelize";
+import { genSalt, hash, compare } from "bcrypt";
+
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "sqlite.db",
@@ -13,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const port = 4000;
+const saltRounds = 10;
 
 /**
  * LOGIN PAGE:
@@ -24,19 +27,31 @@ const port = 4000;
 app.route("/login").post(async (req, res) => {
   const data = req.body;
 
+  const User = sequelize.define('user', {
+    password: {
+      field: 'password',
+      type: DataTypes.STRING,
+      primaryKey: false
+    }
+  })
+
   const [userData, metaData] = await sequelize.query(
-    "SELECT email, password FROM Users WHERE email = :email AND password = :password",
-    { replacements: { email: data.email, password: data.password } }
+    "SELECT email, password FROM Users WHERE email = :email",
+    { replacements: { email: data.email }, 
+      model: User,
+      mapToModel: true},
+
   );
   console.log(userData);
   console.log(metaData);
-  if (userData.length == 1) {
+  const result = await compare(data.password, userData.dataValues.password)
+   if (result) {
+    console.log("login success");
     res.status(200).json({Message: "Login successful"})
-  } else if (userData.length == 0) {
-    res.status(400).json({Message: "Incorrect credentials"})
   } else {
-    res.status(500).json({Message: "How did we get here"});
-  }
+    console.log("incorrect creds");
+    res.status(400).json({Message: "Incorrect credentials"})
+  } 
 });
 
 /**
@@ -46,29 +61,52 @@ app.route("/login").post(async (req, res) => {
  * Returns 400 if the user already exists
  * Returns 200 if the operation was a success
  */
-app.route("/signup").post(async (req, res) => {
+app.route("/signup").put(async (req, res) => {
   const data = req.body;
 
   // Future implementation: 
-  // if (data.email.length < someamount && data.email.length > someamount) {
+  // if (data.password.length < someamount && data.password.length > someamount) {
   //    res.status(400).send("Incorrect length! ");
   // }
+
+  const securedPassword = await hash(data.password, saltRounds);
+
   try {
     await sequelize.query(
-      "INSERT INTO Users (email, createdAt, password) VALUES (:email, :createAt, :password)",
+      "INSERT INTO Users (username, email, createdAt, password) VALUES (:username, :email, :createAt, :password)",
       {
         replacements: {
+          username: data.username,
           email: data.email,
           createAt: new Date(),
-          password: data.password,
+          password: securedPassword,
         },
       }
     );
+    res.status(200).json({Message: "Success! "});
   } catch (e){
-    res.status(400).json({Message: "Error!"})
+    if (e instanceof Error){
+      if (e.message == "Validation error"){
+        console.log("already exists");
+        res.status(412).send("Email already exists!");
+      } else {
+        console.log("unknown: " + e);
+        res.status(400).send("Unknown error: " + e);
+      }
+    } else {
+      console.log("We blew up");
+      res.status(500).send("How did we get here");
+    }
   }
   
-  res.status(200).json({Message: "Success! "});
+});
+
+app.route("/getTasks").get(async (req, res) => {
+
+});
+
+app.route("/createTasks").put(async (req, res) => {
+
 });
 
 app.listen(port, () => {
