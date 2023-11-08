@@ -54,7 +54,11 @@
 .bi{
     width: 50%;
     height: 100%;
-    background-image: url("../images/8bitsprite.png");
     border: red;
     background-repeat: no-repeat;
+}
+
+#errorMsg{
+    color: red;
+    font: bold;
 }
