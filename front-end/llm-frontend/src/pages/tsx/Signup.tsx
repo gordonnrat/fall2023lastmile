@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../css/Signup.css";
+import img1 from "../../images/signupimg.png";
 
 const SignupForm: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -51,49 +52,53 @@ const SignupForm: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="bi"></div>
-      <form onSubmit={handleSubmit} className="signupform">
-        <h2>Sign Up</h2>
-        <p id="errorMsg"></p>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="choose a username."
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <div className="bi">
+        <img className='signup-img' src={img1} alt = "Chibi art"></img>
+      </div>
+      <div className='form-container'>
+        <form onSubmit={handleSubmit} className="signupform">
+          <h2>Sign Up</h2>
+          <p id="errorMsg"></p>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="choose a username."
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="enter your email."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="enter your email."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="enter your password."
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="enter your password."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <label htmlFor="confirm-password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          placeholder="re-enter your password."
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+          <label htmlFor="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="re-enter your password."
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
 
-        <input type="submit" value="Sign Up" />
-        <a href="/#/login">Already have an account? Log in</a>
-      </form>
+          <input type="submit" value="Sign Up" />
+          <a href="/#/login">Already have an account? Log in</a>
+        </form>
+      </div>
     </div>
   );
 };
