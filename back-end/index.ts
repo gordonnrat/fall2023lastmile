@@ -97,6 +97,14 @@ app.route("/signup").put(async (req, res) => {
   }
 });
 
+
+/**
+ * Get Tasks:
+ * Searches database for the tasks assigned to a user
+ * Returns 200 if successful and sends tasks to frontend
+ * Returns 400 for all other errors
+ * 
+ */
 // CHANGE BACK TO GET LATER
 app.route("/getTasks").post(async (req, res) => {
   const data = req.body;
@@ -112,6 +120,12 @@ app.route("/getTasks").post(async (req, res) => {
   }
 });
 
+/**
+ * Create Tasks:
+ * Inserts tasks into the table and assigns to it the user
+ * Returns 200 if successful
+ * Returns 400 for all other errors
+ */
 app.route("/createTasks").put(async (req, res) => {
   const data = req.body;
   try {
