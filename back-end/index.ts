@@ -27,31 +27,28 @@ const saltRounds = 10;
 app.route("/login").post(async (req, res) => {
   const data = req.body;
 
-  const User = sequelize.define('user', {
+  const User = sequelize.define("user", {
     password: {
-      field: 'password',
+      field: "password",
       type: DataTypes.STRING,
-      primaryKey: false
-    }
-  })
+      primaryKey: false,
+    },
+  });
 
   const [userData, metaData] = await sequelize.query(
     "SELECT email, password FROM Users WHERE email = :email",
-    { replacements: { email: data.email }, 
-      model: User,
-      mapToModel: true},
-
+    { replacements: { email: data.email }, model: User, mapToModel: true }
   );
   console.log(userData);
   console.log(metaData);
-  const result = await compare(data.password, userData.dataValues.password)
-   if (result) {
+  const result = await compare(data.password, userData.dataValues.password);
+  if (result) {
     console.log("login success");
-    res.status(200).json({Message: "Login successful"})
+    res.status(200).json({ Message: "Login successful" });
   } else {
     console.log("incorrect creds");
-    res.status(400).json({Message: "Incorrect credentials"})
-  } 
+    res.status(400).json({ Message: "Incorrect credentials" });
+  }
 });
 
 /**
@@ -64,7 +61,7 @@ app.route("/login").post(async (req, res) => {
 app.route("/signup").put(async (req, res) => {
   const data = req.body;
 
-  // Future implementation: 
+  // Future implementation:
   // if (data.password.length < someamount && data.password.length > someamount) {
   //    res.status(400).send("Incorrect length! ");
   // }
@@ -83,10 +80,10 @@ app.route("/signup").put(async (req, res) => {
         },
       }
     );
-    res.status(200).json({Message: "Success! "});
-  } catch (e){
-    if (e instanceof Error){
-      if (e.message == "Validation error"){
+    res.status(200).json({ Message: "Success! " });
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.message == "Validation error") {
         console.log("already exists");
         res.status(412).send("Email already exists!");
       } else {
@@ -98,15 +95,41 @@ app.route("/signup").put(async (req, res) => {
       res.status(500).send("How did we get here");
     }
   }
-  
 });
 
-app.route("/getTasks").get(async (req, res) => {
-
+// CHANGE BACK TO GET LATER
+app.route("/getTasks").post(async (req, res) => {
+  const data = req.body;
+  try {
+    const [taskData, metaData] = await sequelize.query("SELECT * FROM Task WHERE userid = :userid", {
+      replacements: {
+        userid: data.userid,
+      },
+    });
+    res.status(200).json({taskData});
+  } catch (e) {
+    res.status(400).send(e);
+  }
 });
 
 app.route("/createTasks").put(async (req, res) => {
-
+  const data = req.body;
+  try {
+    await sequelize.query(
+      "INSERT INTO Task (userid, taskname, taskdesc, date) VALUES (:userid, :taskname, :taskdesc, :date)",
+      {
+        replacements: {
+          userid: data.id,
+          taskname: data.taskname,
+          taskdesc: data.taskdesc,
+          date: new Date(),
+        },
+      }
+    );
+    res.status(200).json({ message: "Success" });
+  } catch (e) {
+    res.status(400).send(e);
+  }
 });
 
 app.listen(port, () => {

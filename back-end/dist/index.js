@@ -37,16 +37,14 @@ const saltRounds = 10;
  */
 app.route("/login").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    const User = sequelize.define('user', {
+    const User = sequelize.define("user", {
         password: {
-            field: 'password',
+            field: "password",
             type: sequelize_1.DataTypes.STRING,
-            primaryKey: false
-        }
+            primaryKey: false,
+        },
     });
-    const [userData, metaData] = yield sequelize.query("SELECT email, password FROM Users WHERE email = :email", { replacements: { email: data.email },
-        model: User,
-        mapToModel: true });
+    const [userData, metaData] = yield sequelize.query("SELECT email, password FROM Users WHERE email = :email", { replacements: { email: data.email }, model: User, mapToModel: true });
     console.log(userData);
     console.log(metaData);
     const result = yield (0, bcrypt_1.compare)(data.password, userData.dataValues.password);
@@ -68,7 +66,7 @@ app.route("/login").post((req, res) => __awaiter(void 0, void 0, void 0, functio
  */
 app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    // Future implementation: 
+    // Future implementation:
     // if (data.password.length < someamount && data.password.length > someamount) {
     //    res.status(400).send("Incorrect length! ");
     // }
@@ -99,6 +97,38 @@ app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, functio
             console.log("We blew up");
             res.status(500).send("How did we get here");
         }
+    }
+}));
+// CHANGE BACK TO GET LATER
+app.route("/getTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        const [taskData, metaData] = yield sequelize.query("SELECT * FROM Task WHERE userid = :userid", {
+            replacements: {
+                userid: data.userid,
+            },
+        });
+        res.status(200).json({ taskData });
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+}));
+app.route("/createTasks").put((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        yield sequelize.query("INSERT INTO Task (userid, taskname, taskdesc, date) VALUES (:userid, :taskname, :taskdesc, :date)", {
+            replacements: {
+                userid: data.id,
+                taskname: data.taskname,
+                taskdesc: data.taskdesc,
+                date: new Date(),
+            },
+        });
+        res.status(200).json({ message: "Success" });
+    }
+    catch (e) {
+        res.status(400).send(e);
     }
 }));
 app.listen(port, () => {
