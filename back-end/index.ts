@@ -97,24 +97,73 @@ app.route("/signup").put(async (req, res) => {
   }
 });
 
+/**
+ * Update User Email:
+ * Updates the user email in database to whatever they entered into the field
+ * Returns 200 if success
+ * Returns 400 if error
+ */
+app.route("/updateUserEmail").post(async (req, res) => {
+  const data = req.body;
+  try {
+    await sequelize.query(
+      "UPDATE Users WHERE id = :id SET email = :email", 
+    {
+      replacements: {
+        id: data.id,
+        email: data.email,
+      },
+    });
+    res.status(200).send("Successfully changed");
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+/**
+ * Update User Password:
+ * Updates the user password in data to whatever they put in the field
+ * Returns 200 if success
+ * Returns 400 if error
+ */
+app.route("/updateUserPassword").post(async (req, res) => {
+  const data = req.body;
+  try{
+    await sequelize.query(
+      "UPDATE Users WHERE id = :id SET password = :password",
+      {
+        replacements: {
+          id: data.id,
+          password: data.password
+        }
+      }
+    )
+    res.status(200).send("Successfully changed");
+  } catch (e){
+    res.status(400).send(e);
+  }
+});
 
 /**
  * Get Tasks:
  * Searches database for the tasks assigned to a user
  * Returns 200 if successful and sends tasks to frontend
  * Returns 400 for all other errors
- * 
+ *
  */
 // CHANGE BACK TO GET LATER
 app.route("/getTasks").post(async (req, res) => {
   const data = req.body;
   try {
-    const [taskData, metaData] = await sequelize.query("SELECT * FROM Task WHERE userid = :userid", {
-      replacements: {
-        userid: data.userid,
-      },
-    });
-    res.status(200).json({taskData});
+    const [taskData, metaData] = await sequelize.query(
+      "SELECT * FROM Task WHERE userid = :userid",
+      {
+        replacements: {
+          userid: data.userid,
+        },
+      }
+    );
+    res.status(200).json({ taskData });
   } catch (e) {
     res.status(400).send(e);
   }
@@ -148,31 +197,28 @@ app.route("/createTasks").put(async (req, res) => {
 
 /**
  * Update Tasks:
- * 
- * 
+ *
+ *
  */
-app.route("/updateTasks").post(async (req, res) => {
-
-});
+app.route("/updateTasks").post(async (req, res) => {});
 
 /**
  * Delete Tasks:
  * Deletes the task assigned to a certain id
  * Returns 200 when successful
  * Returns 400 when error
- * 
+ *
  */
-app.route("/deleteTasks").delete(async (req, res) =>{
+app.route("/deleteTasks").delete(async (req, res) => {
   const data = req.body;
-  try{
-    await sequelize.query(
-      "DELETE FROM Task WHERE taskid = :taskid",
-      {replacements: {
-        taskid: data.taskid
-      }}
-    )
+  try {
+    await sequelize.query("DELETE FROM Task WHERE taskid = :taskid", {
+      replacements: {
+        taskid: data.taskid,
+      },
+    });
     res.status(200).send("Successfully deleted");
-  } catch (e){
+  } catch (e) {
     res.status(400).send(e);
   }
 });
