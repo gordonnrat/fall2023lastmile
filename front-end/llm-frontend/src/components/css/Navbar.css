@@ -4,6 +4,7 @@
     top: 0;
     width: 100vw;
     background-color: white;
+    z-index: 20;
 }
 
 .navbar-links {
@@ -18,6 +19,9 @@
 
 .navbar-links li a {
     text-decoration: none;
+    height: 57px;
+    display: flex;
+    text-align: center;
 }
 
 .navbar-right-account {
@@ -40,6 +44,7 @@
 .navbar-left-logo {
     display: flex;
     align-items: center;
+    margin-right: 4rem;
 }
 
 .navbar-left-logo img{
@@ -64,3 +69,25 @@
     -moz-text-fill-color: transparent;
 }
 
+.navbar-left-container ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.navbar-left-text{
+    color: #151563;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-left-links a{
+    padding: 0 25px;
+}
+
+.navbar-left-hover a:hover {
+    background-color: rgba(0, 0, 0, 0.059);
+    /* color: #07BEB8; */
+}
