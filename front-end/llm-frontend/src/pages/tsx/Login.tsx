@@ -15,7 +15,7 @@ const LoginForm: React.FC = () => {
             email: email,
             password: password
         }
-
+        
         await fetch (DOMAIN_NAME + "login", {
             method: "POST",
             headers: {
