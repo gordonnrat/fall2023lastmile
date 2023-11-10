@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import Home from "./pages/tsx/home"
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Todolist from './pages/tsx/Todolist';
@@ -20,6 +21,7 @@ root.render(
             <Route path='/todolist' element={<Todolist/>}/>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/signup' element={<SignupForm/>}/>
+            <Route path='/home' element={<Home/>}/>
           </Routes>
     </Router>
   </React.StrictMode>
