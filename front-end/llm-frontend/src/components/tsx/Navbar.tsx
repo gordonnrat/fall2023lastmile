@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import '../css/Navbar.css';
+import React, { useState } from 'react';
 
 export default function Navbar() {
+    const [isLandingPage, setIsLandingPage] = useState(true);
+    
+
     return(
         <div className="navbar">
             <ul className="navbar-links">
