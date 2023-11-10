@@ -35,7 +35,7 @@ export default function Navbar() {
                     </div>
                 </li>
                 <li>
-                    <Link to="/"> 
+                    <Link to="/accounts"> 
                     {/* either links to account page or opens a drop down for account settings */}
                         <div className="navbar-right-account">
                             <h1>Account Name</h1>
