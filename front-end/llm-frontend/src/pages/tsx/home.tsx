@@ -5,7 +5,7 @@ import { Router } from 'express';
 
 export const Home = () => {
   return (
-    <div className="container">
+    <div className="landing-container">
       <Navbar/>
 
       <main>
