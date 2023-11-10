@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import "../css/Login.css";
 import img1 from "../../images/loginimg.png";
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const DOMAIN_NAME = "http://localhost:4000/";
@@ -33,6 +35,7 @@ const LoginForm: React.FC = () => {
                 localStorage.setItem("email", userData.email);
                 localStorage.setItem("id", userData.id);
                 p.textContent = "";
+                navigate('/todolist')
                 // Redirect to the homepage 
             }
         });
