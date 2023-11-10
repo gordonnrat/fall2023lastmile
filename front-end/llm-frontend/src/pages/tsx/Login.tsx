@@ -29,6 +29,9 @@ const LoginForm: React.FC = () => {
                 p.textContent = "Incorrect Login Information!";
                 return;
             } else {
+                const userData = await res.json();
+                localStorage.setItem("email", userData.email);
+                localStorage.setItem("id", userData.id);
                 p.textContent = "";
                 // Redirect to the homepage 
             }

@@ -35,19 +35,25 @@ app.route("/login").post(async (req, res) => {
     },
   });
 
-  const [userData, metaData] = await sequelize.query(
-    "SELECT email, password FROM Users WHERE email = :email",
-    { replacements: { email: data.email }, model: User, mapToModel: true }
-  );
-  console.log(userData);
-  console.log(metaData);
-  const result = await compare(data.password, userData.dataValues.password);
-  if (result) {
-    console.log("login success");
-    res.status(200).json({ Message: "Login successful" });
-  } else {
-    console.log("incorrect creds");
-    res.status(400).json({ Message: "Incorrect credentials" });
+  try{
+    const [userData, metaData] = await sequelize.query(
+      "SELECT * FROM Users WHERE email = :email",
+      { replacements: { email: data.email }, model: User, mapToModel: true }
+    );
+    console.log(userData);
+    console.log(metaData);
+    const result = await compare(data.password, userData.dataValues.password);
+    if (result) {
+      console.log("login success");
+      res.status(200).json({email: userData.dataValues.email,
+                            id: userData.dataValues.id});
+    } else {
+      console.log("incorrect creds");
+      res.status(400).json({ Message: "Incorrect credentials" });
+    }
+
+  } catch (e){
+    res.status(500).send("We blew up");
   }
 });
 
