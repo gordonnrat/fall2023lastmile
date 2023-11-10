@@ -1,7 +1,7 @@
 /* Home.css */
 
 /* Container and overall layout */
-.container {
+.landing-container {
   font-family: 'Arial', sans-serif; /* You should use the font that matches your design */
   max-width: 1200px;
   margin: 0 auto;
