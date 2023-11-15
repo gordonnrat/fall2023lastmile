@@ -10,6 +10,7 @@ import { HashRouter as Router, Routes, Route }
 import Login from './pages/tsx/Login';
 import LoginForm from './pages/tsx/Login';
 import SignupForm from './pages/tsx/Signup';
+import Leaderboard from './pages/tsx/leaderboard';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,6 +23,7 @@ root.render(
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/signup' element={<SignupForm/>}/>
             <Route path='/home' element={<Home/>}/>
+            <Route path='/leaderboard' element={<Leaderboard/>}/>
           </Routes>
     </Router>
   </React.StrictMode>
