@@ -114,7 +114,10 @@ export default function Todolist() {
                     </div>
                     
                     <div className="task-page-right-container">
-                    
+                        <div className="task-right-items">
+                            <h2>Daily Goal</h2>
+                            <img src={require("../../images/dailygoal.png")} alt="daily goal"/>
+                        </div>
                     </div>
                 </div>
 

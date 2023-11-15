@@ -42,21 +42,32 @@
 
 /* Hero section styles */
 .hero {
-  text-align: center;
-  padding: 50px 20px;
+  margin-top: 57px;
   background-color: #ececec; /* Adjust the color to match your design */
-  background-image: url("../../images/signupimg.png");
+  background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('../../images/heroimg.jpg');
+  /* background-image: url("../../images/heroimg.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .hero h1 {
-  font-size: 36px;
+  font-size: 40px;
   margin-bottom: 20px;
   line-height: 1.2;
-  color: #333; /* Adjust the color to match your design */
+  color: white; /* Adjust the color to match your design */
+}
+
+.hero-calltoaction {
+  margin-left: 10%;
 }
 
 .hero .cta {
-  padding: 15px 30px;
+  padding: 15px 4rem;
   font-size: 18px;
   color: black;
   cursor: pointer;
@@ -70,20 +81,32 @@
   
     text-decoration: none; /* Remove underlines or other decorations */
     color: #000; /* Set the text color to your preferred color */
-
+    
 }
 /* Features section styles */
 .features {
   display: flex;
   justify-content: space-around;
-  padding: 50px 20px;
-  background: url("../../images/wave.png"), white 50% / cover no-repeat
-  
+  padding: 25px 15%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
 }
 
 .feature {
+  margin: 25px 80px;
   text-align: center;
   width: 30%;
+}
+
+.feature-title {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.feature-title h2{
+  margin-bottom: 0;
+  font-size: 32px;
 }
 
 .feature h2 {
@@ -92,8 +115,8 @@
 }
 
 .feature p {
-  font-size: 16px;
-  color: #666; /* Adjust the color to match your design */
+  font-size: 22px;
+  color: #333; /* Adjust the color to match your design */
 }
 
 /* Icons can be added via background-image in CSS, or you can use <img> tags in your JSX and style them here */
@@ -129,9 +152,8 @@
 /* Gamification section styles */
 .gamification {
   background: linear-gradient(180deg, #B6E7E5 40.63%, #FFCBF2 100%);
-  padding: 50px 20px;
+  padding: 50px 20px 150px;
   text-align: center;
-  
   
 }
 
@@ -162,4 +184,50 @@
   .hero h1 {
     font-size: 28px;
   }
+}
+
+.gamification-about {
+  background-color: white;
+  width: 65%;
+  margin: auto;
+  padding: 25px 50px 50px;
+  border-radius: 25px;
+  margin-top: 50px;
+}
+
+.gamification-about p {
+  width: 90%;
+  font-size: 22px;
+  margin: auto;
+}
+
+.gamification-title h2{
+  font-size: 32px;
+}
+
+.gamification-elements{
+  margin-top: 150px;
+}
+
+.gamification-features-container {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.gamification-features {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  padding: 50px 25px;
+  width: 25%;
+}
+
+.gamification-features p {
+  font-size: 22px;
 }

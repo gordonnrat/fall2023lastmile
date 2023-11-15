@@ -19,11 +19,13 @@ root.render(
   <React.StrictMode>
     <Router>
           <Routes>
+            <Route path='/' element={<Home/>}/>
             <Route path='/todolist' element={<Todolist/>}/>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/signup' element={<SignupForm/>}/>
             <Route path='/home' element={<Home/>}/>
             <Route path='/accounts' element={<Accounts/>}/>
+            <Route path='/*' element={<Home/>}/>
           </Routes>
     </Router>
   </React.StrictMode>
