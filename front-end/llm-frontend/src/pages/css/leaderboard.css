@@ -1,0 +1,26 @@
+.parent-container {
+  display: flex;
+  flex-direction: row; /* Sidebar and leaderboard side by side */
+}
+
+.sidebar {
+  width: 200px; /* Or however wide your sidebar should be */
+  /* Other styling */
+}
+
+.page-container {
+  display: flex; /* or 'grid' depending on your layout */
+}
+
+.sidebar {
+  /* Define the width and any other styles for your sidebar */
+  width: 200px; /* Example width, adjust to your actual sidebar width */
+}
+
+.leaderboard-container {
+  margin-left: 230px;
+  padding-left: 25px;
+  margin-top: 57px;
+  padding-top: 10px;
+  padding-right: 50px;
+}
