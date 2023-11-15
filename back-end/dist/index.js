@@ -37,26 +37,30 @@ const saltRounds = 10;
  */
 app.route("/login").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    const User = sequelize.define('user', {
+    const User = sequelize.define("user", {
         password: {
-            field: 'password',
+            field: "password",
             type: sequelize_1.DataTypes.STRING,
-            primaryKey: false
-        }
+            primaryKey: false,
+        },
     });
-    const [userData, metaData] = yield sequelize.query("SELECT email, password FROM Users WHERE email = :email", { replacements: { email: data.email },
-        model: User,
-        mapToModel: true });
-    console.log(userData);
-    console.log(metaData);
-    const result = yield (0, bcrypt_1.compare)(data.password, userData.dataValues.password);
-    if (result) {
-        console.log("login success");
-        res.status(200).json({ Message: "Login successful" });
+    try {
+        const [userData, metaData] = yield sequelize.query("SELECT * FROM Users WHERE email = :email", { replacements: { email: data.email }, model: User, mapToModel: true });
+        console.log(userData);
+        console.log(metaData);
+        const result = yield (0, bcrypt_1.compare)(data.password, userData.dataValues.password);
+        if (result) {
+            console.log("login success");
+            res.status(200).json({ email: userData.dataValues.email,
+                id: userData.dataValues.id });
+        }
+        else {
+            console.log("incorrect creds");
+            res.status(400).json({ Message: "Incorrect credentials" });
+        }
     }
-    else {
-        console.log("incorrect creds");
-        res.status(400).json({ Message: "Incorrect credentials" });
+    catch (e) {
+        res.status(500).send("We blew up");
     }
 }));
 /**
@@ -68,7 +72,7 @@ app.route("/login").post((req, res) => __awaiter(void 0, void 0, void 0, functio
  */
 app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    // Future implementation: 
+    // Future implementation:
     // if (data.password.length < someamount && data.password.length > someamount) {
     //    res.status(400).send("Incorrect length! ");
     // }
@@ -97,8 +101,137 @@ app.route("/signup").put((req, res) => __awaiter(void 0, void 0, void 0, functio
         }
         else {
             console.log("We blew up");
-            res.status(500).send("How did we get here");
+            res.status(500).send("How did we get here: " + e);
         }
+    }
+}));
+/**
+ * Update User Email:
+ * Updates the user email in database to whatever they entered into the field
+ * Returns 200 if success
+ * Returns 412 if email already exists
+ * Returns 400 if unknown error
+ */
+app.route("/updateUserEmail").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        yield sequelize.query("UPDATE Users SET email = :email WHERE id = :id ", {
+            replacements: {
+                email: data.email,
+                id: data.id
+            },
+        });
+        res.status(200).send("Successfully changed");
+    }
+    catch (e) {
+        if (e instanceof sequelize_1.Error) {
+            if (e.message == "Validation error") {
+                console.log("already exists");
+                res.status(412).send("Email already exists!");
+            }
+            else {
+                console.log("unknown: " + e);
+                res.status(400).send("Unknown error: " + e);
+            }
+        }
+        else {
+            console.log("We blew up");
+            res.status(500).send("How did we get here: " + e);
+        }
+    }
+}));
+/**
+ * Update User Password:
+ * Updates the user password in data to whatever they put in the field
+ * Returns 200 if success
+ * Returns 400 if error
+ */
+app.route("/updateUserPassword").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        const securedPassword = yield (0, bcrypt_1.hash)(data.password, saltRounds);
+        yield sequelize.query("UPDATE Users SET password = :password WHERE id = :id", {
+            replacements: {
+                password: securedPassword,
+                id: data.id
+            }
+        });
+        res.status(200).send("Successfully changed");
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+}));
+/**
+ * Get Tasks:
+ * Searches database for the tasks assigned to a user
+ * Returns 200 if successful and sends tasks to frontend
+ * Returns 400 for all other errors
+ *
+ */
+// CHANGE BACK TO GET LATER
+app.route("/getTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        const [taskData, metaData] = yield sequelize.query("SELECT * FROM Task WHERE userid = :userid", {
+            replacements: {
+                userid: data.userid,
+            },
+        });
+        res.status(200).json({ taskData });
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+}));
+/**
+ * Create Tasks:
+ * Inserts tasks into the table and assigns to it the user
+ * Returns 200 if successful
+ * Returns 400 for all other errors
+ */
+app.route("/createTasks").put((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        yield sequelize.query("INSERT INTO Task (userid, taskname, taskdesc, date) VALUES (:userid, :taskname, :taskdesc, :date)", {
+            replacements: {
+                userid: data.id,
+                taskname: data.taskname,
+                taskdesc: data.taskdesc,
+                date: new Date(),
+            },
+        });
+        res.status(200).json({ message: "Success" });
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+}));
+/**
+ * Update Tasks:
+ *
+ *
+ */
+app.route("/updateTasks").post((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
+/**
+ * Delete Tasks:
+ * Deletes the task assigned to a certain id
+ * Returns 200 when successful
+ * Returns 400 when error
+ *
+ */
+app.route("/deleteTasks").delete((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    try {
+        yield sequelize.query("DELETE FROM Task WHERE taskid = :taskid", {
+            replacements: {
+                taskid: data.taskid,
+            },
+        });
+        res.status(200).send("Successfully deleted");
+    }
+    catch (e) {
+        res.status(400).send(e);
     }
 }));
 app.listen(port, () => {

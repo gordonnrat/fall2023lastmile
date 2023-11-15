@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import "../css/Login.css";
-import img1 from "../../images/8bitsprite.png";
+import img1 from "../../images/loginimg.png";
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const DOMAIN_NAME = "http://localhost:4000/";
@@ -15,7 +17,7 @@ const LoginForm: React.FC = () => {
             email: email,
             password: password
         }
-
+        
         await fetch (DOMAIN_NAME + "login", {
             method: "POST",
             headers: {
@@ -29,7 +31,11 @@ const LoginForm: React.FC = () => {
                 p.textContent = "Incorrect Login Information!";
                 return;
             } else {
+                const userData = await res.json();
+                localStorage.setItem("email", userData.email);
+                localStorage.setItem("id", userData.id);
                 p.textContent = "";
+                navigate('/todolist')
                 // Redirect to the homepage 
             }
         });
@@ -37,33 +43,35 @@ const LoginForm: React.FC = () => {
 
     return (
         <div className="container">
-            <div id = "bi">
-                <img src={img1} alt = "Chibi art"></img>
+            <div className='bi'>
+                <img className='login-img' src={img1} alt = "Chibi art"></img>
             </div>
-            <form onSubmit={handleSubmit} className='loginform'>
-                <h2>Log In</h2>
-                <p id="errorMsg"></p>
-                <label htmlFor="email">Email</label>
-                <input
-                    type="text"
-                    id="email"
-                    placeholder="enter your email."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="enter your password."
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                
-                <input type="submit" value="Log In" />
-                <a href="/#/signup">Don't have an account? Sign up</a>
-            </form>
+            <div className='form-container'>
+                <form onSubmit={handleSubmit} className='loginform'>
+                    <h2>Log In</h2>
+                    <p id="errorMsg"></p>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="text"
+                        id="email"
+                        placeholder="enter your email."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="enter your password."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    
+                    <input type="submit" value="Log In" />
+                    <a href="/#/signup">Don't have an account? Sign up</a>
+                </form>
+            </div>
             
         </div>
     );

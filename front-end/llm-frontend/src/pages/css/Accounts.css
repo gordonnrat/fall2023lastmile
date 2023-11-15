@@ -1,0 +1,43 @@
+.accounts-page {
+    margin-top: 57px;
+    margin-left: 230px;
+    padding-left: 25px;
+    padding-top: 10px;
+}
+
+.accounts-settings-input {
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 0;
+    height: 25px;
+    width: 100%;
+    font-size: 16px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    margin-bottom: 25px;
+}
+
+.accounts-button {
+    background-color: #3DCCC7;
+    border: none;
+    color: black;
+    height: 30px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: black solid 1px;
+    padding: 5px 10px;
+    width: 160px;
+}
+
+.accounts-page-form {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .accounts-left-flex {
+    display: flex;
+    justify-content: right;
+} */

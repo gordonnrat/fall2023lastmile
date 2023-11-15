@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import '../css/Navbar.css';
+import React, { useState } from 'react';
 
 export default function Navbar() {
+    const [isLandingPage, setIsLandingPage] = useState(true);
+    
+
     return(
         <div className="navbar">
             <ul className="navbar-links">
@@ -35,7 +39,7 @@ export default function Navbar() {
                     </div>
                 </li>
                 <li>
-                    <Link to="/"> 
+                    <Link to="/accounts"> 
                     {/* either links to account page or opens a drop down for account settings */}
                         <div className="navbar-right-account">
                             <h1>Account Name</h1>
