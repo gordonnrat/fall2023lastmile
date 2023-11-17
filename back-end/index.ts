@@ -204,7 +204,7 @@ app.route("/createTasks").put(async (req, res) => {
           userid: data.id,
           taskname: data.taskname,
           taskdesc: data.taskdesc,
-          date: new Date(),
+          date: new Date(data.date),
         },
       }
     );
