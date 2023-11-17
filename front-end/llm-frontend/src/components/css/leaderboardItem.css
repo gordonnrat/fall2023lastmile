@@ -1,0 +1,42 @@
+/* LeaderboardItem.css */
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #D3D3D3; /* Light background for each item */
+  margin: 5px 0; /* Space between leaderboard items */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.rank {
+  font-size: 24px; /* Larger font size for the rank */
+  color: black; /* Dark grey color for the rank */
+  margin-right: 12px; /* Space after the rank */
+}
+
+.username {
+  font-weight: bold;
+  flex-grow: 1;
+  text-align: left; /* Align the username to the left */
+}
+
+.score-bar-container {
+  flex-grow: 2;
+  background-color: #e1e1e1; /* A darker shade for the background of the score bar */
+  margin: 0 15px;
+  border-radius: 5px;
+  overflow: hidden; /* Ensures the child bar respects border radius */
+}
+
+.score-bar {
+  height: 20px; /* Thicker bar for better visibility */
+  background-color: #4caf50; /* Color for the score bar */
+  transition: width 0.5s ease-in-out; /* Smooth transition for the bar width */
+}
+
+.score {
+  font-weight: bold;
+  color: #333; /* Dark color for the score text */
+}
