@@ -22,6 +22,7 @@ root.render(
   <React.StrictMode>
     <Router>
           <Routes>
+            <Route path='/' element={<Home/>}/>
             <Route path='/todolist' element={<Todolist/>}/>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/signup' element={<SignupForm/>}/>
@@ -30,6 +31,8 @@ root.render(
             <Route path='/leaderboard' element={<Leaderboard/>}/>
 
             <Route path='/accounts' element={<Accounts/>}/>
+
+            <Route path='/*' element={<Home/>}/>
 
           </Routes>
     </Router>

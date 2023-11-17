@@ -198,7 +198,7 @@ app.route("/createTasks").put((req, res) => __awaiter(void 0, void 0, void 0, fu
                 userid: data.id,
                 taskname: data.taskname,
                 taskdesc: data.taskdesc,
-                date: new Date(),
+                date: new Date(data.date),
             },
         });
         res.status(200).json({ message: "Success" });

@@ -66,6 +66,7 @@ const SignupForm: React.FC = () => {
             placeholder="choose a username."
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
 
           <label htmlFor="email">Email</label>
@@ -75,6 +76,7 @@ const SignupForm: React.FC = () => {
             placeholder="enter your email."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
           <label htmlFor="password">Password</label>
@@ -84,6 +86,7 @@ const SignupForm: React.FC = () => {
             placeholder="enter your password."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
 
           <label htmlFor="confirm-password">Confirm Password</label>
@@ -93,6 +96,7 @@ const SignupForm: React.FC = () => {
             placeholder="re-enter your password."
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required
           />
 
           <input type="submit" value="Sign Up" />

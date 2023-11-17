@@ -57,6 +57,7 @@ const LoginForm: React.FC = () => {
                         placeholder="enter your email."
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
                     
                     <label htmlFor="password">Password</label>
@@ -66,6 +67,7 @@ const LoginForm: React.FC = () => {
                         placeholder="enter your password."
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                     
                     <input type="submit" value="Log In" />

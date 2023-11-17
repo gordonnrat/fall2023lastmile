@@ -39,6 +39,7 @@
 .navbar-right-account h1 {
     color: black;
     font-size: 1rem;
+    margin-right: 10px;
 }
 
 .navbar-left-logo {
@@ -90,4 +91,31 @@
 .navbar-left-hover a:hover {
     background-color: rgba(0, 0, 0, 0.059);
     /* color: #07BEB8; */
+}
+
+.landing-signup-button {
+    background-color: #E5B3FE;
+    border: none;
+    color: black;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 100px;
+    cursor: pointer;
+    border: black solid 1px;
+}
+
+.landing-login-button {
+    background-color: #3DCCC7;
+    border: none;
+    color: black;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 100px;
+    cursor: pointer;
+    border: black solid 1px;
+    margin-left: 25px;
 }
